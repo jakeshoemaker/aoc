@@ -55,7 +55,7 @@ func calculateSnackWeight(snacks [3]int) int {
 }
 
 func parseFile() ([]string, error) {
-	file, err := os.Open("numbers.txt")
+	file, err := os.Open("data/day1.txt")
 	if err != nil {
 		return nil, err
 	}
