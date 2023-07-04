@@ -12,9 +12,8 @@ func main() {
 	if err != nil {
 		fmt.Println("error parsing file")
 	}
-
-	highest, highest_pos := 0, 1
-	counter, pos := 0, 1
+	snacks := [3]int{ 0, 0, 0 }
+	counter, pos := 0, 0
 	for _, line := range lines {
 		if line != "" {
 			i, err := strconv.Atoi(line)
@@ -22,20 +21,37 @@ func main() {
 				panic(err)
 			}
 			counter += i
+
 			continue
 		}
+		
 
-		// line ended, increment pos, eval counter, reset
-		if counter > highest {
-			highest = counter
-			highest_pos = pos
-		}
-		pos++
+		weighSnack(counter, &snacks)	
 		counter = 0
+		pos++
 	}
 
-	fmt.Println(highest_pos)
-	fmt.Println(highest)
+	fmt.Println(snacks)
+	fmt.Println(calculateSnackWeight(snacks))
+}
+
+func weighSnack(snack int, snacks *[3]int) {
+	if snack > snacks[0] {
+		t1, t0 := snacks[1], snacks[0]
+		snacks[2] = t1
+		snacks[1] = t0
+		snacks[0] = snack
+	} else if snack > snacks[1] && snack < snacks[0] {
+		t1 := snacks[1]
+		snacks[2] = t1
+		snacks[1] = snack
+	} else if snack > snacks[2] && snack < snacks[1] {
+		snacks[2] = snack
+	}
+}
+
+func calculateSnackWeight(snacks [3]int) int {
+	return (snacks[0] + snacks[1] + snacks[2])
 }
 
 func parseFile() ([]string, error) {
