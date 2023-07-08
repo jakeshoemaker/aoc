@@ -1,9 +1,8 @@
 package main
 
 import (
-	"bufio"
     "fmt"
-	"os"
+    "jshoemaker/advent_of_code/helpers"
 )
 
 const (
@@ -19,7 +18,7 @@ const (
 )
 
 func main() {
-	rpc_rounds, err := parseFile()
+	rpc_rounds, err := helpers.ParseFile("data/day2.txt")
     if err != nil {
         panic(err)
     }
@@ -90,22 +89,3 @@ func win(move rune, my_score *int) {
         panic("how did we get here")
     }
 }
-
-func parseFile() ([]string, error) {
-	file, err := os.Open("data/day2.txt")
-	if err != nil {
-		return nil, err
-	}
-
-	scanner := bufio.NewScanner(file)
-	scanner.Split(bufio.ScanLines)
-	var lines []string
-	// append lines to our line buffer
-	for scanner.Scan() {
-	lines = append(lines, scanner.Text())
-	}
-
-	file.Close()
-	return lines, nil
-}
-

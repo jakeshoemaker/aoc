@@ -1,14 +1,13 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"strconv"
+    "jshoemaker/advent_of_code/helpers"
 )
 
 func main() {
-	var lines, err = parseFile()
+	var lines, err = helpers.ParseFile("data/day1.txt")
 	if err != nil {
 		fmt.Println("error parsing file")
 	}
@@ -54,21 +53,3 @@ func calculateSnackWeight(snacks [3]int) int {
 	return (snacks[0] + snacks[1] + snacks[2])
 }
 
-func parseFile() ([]string, error) {
-	file, err := os.Open("data/day1.txt")
-	if err != nil {
-		return nil, err
-	}
-
-	scanner := bufio.NewScanner(file)
-	scanner.Split(bufio.ScanLines)
-	var lines []string
-	// append lines to our line buffer
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	file.Close()
-
-	return lines, nil
-}
